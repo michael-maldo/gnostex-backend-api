@@ -94,3 +94,4 @@ java.lang.Throwable: Schema loading failure report. SchemaPath: www.schemastore.
 1000
 2025-12-22 18:18:23,364 [15455111]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
 1000
+1000
