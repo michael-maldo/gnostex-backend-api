@@ -10,6 +10,6 @@ public class HelloController {
 
     @GetMapping("/hello")
     public String hello() {
-        return "Gnostex backend is running";
+        return "Gnostex backend is running!!";
     }
 }
