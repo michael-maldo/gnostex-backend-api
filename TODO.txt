@@ -1,0 +1,15 @@
+TODO
+    docker -- refer to the http://postgresql.local/docs/advanced/docker
+        full CI/CD from GitHub → VPS with Docker.
+            Create a Dockerfile for your Spring Boot app
+            Build Docker image on VPS (manual test)
+            Connect container to your native PostgreSQL
+            Running your container as a service (production-style)
+            Optional: Automate deployment via GitHub Actions
+
+TODO
+    work on the github ci workflow with unit tests
+    USE  run / use Testcontainers PostgreSQL
+    CI Run unit tests during the build stage, not in the runtime image — and preferably in CI, not on every local Docker build.
+    CD ssh, docker pull and run new image
+    Investigate the latest tag pointer

@@ -1,0 +1,18 @@
+target/
+.git/
+.gitignore
+.idea/
+.vscode/
+node_modules/
+
+# OS / editor noise
+.DS_Store
+*.swp
+
+# Logs
+*.log
+
+# Env files
+.env
+.env.*
+
