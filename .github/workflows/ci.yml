@@ -78,7 +78,7 @@ jobs:
             docker run -d \
               --name gnostex-backend-api \
               --restart unless-stopped \
-               --add-host=host.docker.internal:host-gateway \
+              --add-host=host.docker.internal:host-gateway \
               -p 8080:8080 \
               -e SPRING_PROFILES_ACTIVE=dev \
               -e DB_URL=jdbc:postgresql://host.docker.internal:5432/gnostexdb \
