@@ -35,5 +35,9 @@ EXPOSE 8080
 # Optional JVM tuning (safe defaults)
 ENV JAVA_OPTS=""
 
+# health check
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s \
+  CMD curl -f http://localhost:8080/actuator/health || exit 1
+
 # Run Spring Boot
 ENTRYPOINT ["sh","-c","java $JAVA_OPTS -jar /app/app.jar"]
