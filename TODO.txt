@@ -13,3 +13,12 @@ TODO
     CI Run unit tests during the build stage, not in the runtime image — and preferably in CI, not on every local Docker build.
     CD ssh, docker pull and run new image
     Investigate the latest tag pointer
+
+TODO
+    setup backend-web dns, ssl, jwt
+
+TODO
+    define what is DEV and PROD
+
+TODO
+    finish docker book -- Nigel Foulton
