@@ -19,6 +19,9 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 
+# add curl
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
 # Copy jar from build stage
 COPY --from=build /app/target/gnostex-backend-api-0.0.1-SNAPSHOT.jar app.jar
 

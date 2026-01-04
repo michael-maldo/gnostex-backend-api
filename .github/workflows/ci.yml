@@ -84,6 +84,30 @@ jobs:
               -e DB_USERNAME=gnostex \
               -e DB_PASSWORD=gnostex \
               ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:latest
+            
+            echo "Waiting for container health..."
+  
+            for i in {1..20}; do
+              STATUS=$(docker inspect --format='{{.State.Health.Status}}' gnostex-backend-api 2>/dev/null || echo "starting")
+              echo "Health status: $STATUS"
+
+              if [ "$STATUS" = "healthy" ]; then
+                echo "Container is healthy ✅"
+                exit 0
+              fi
+
+              if [ "$STATUS" = "unhealthy" ]; then
+                echo "Container is unhealthy ❌"
+                docker logs gnostex-backend-api
+                exit 1
+              fi
+
+              sleep 5
+            done
+  
+            echo "Health check timed out ❌"
+            docker logs gnostex-backend-api
+            exit 1
 
 
 
