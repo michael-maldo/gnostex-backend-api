@@ -59,16 +59,16 @@ jobs:
 
 
       # Build & push image
-#      - name: Build and push Docker image
-#        uses: docker/build-push-action@v5
-#        env:
-#          BUILDKIT_PROGRESS: plain
-#        with:
-#          context: .
-#          push: true
-#          tags: |
-#            ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:latest
-#            ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:${{ github.sha }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        env:
+          BUILDKIT_PROGRESS: plain
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:latest
+            ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:${{ github.sha }}
 
       # Deploy to VPS
 #      - name: Deploy to VPS
