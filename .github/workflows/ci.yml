@@ -65,26 +65,25 @@ jobs:
       # GHCR github container repository -- container images
 
 
-#      - name: Deploy to VPS
-#        uses: appleboy/ssh-action@v1.0.3
-#        with:
-#          host: ${{ secrets.VPS_HOST }}
-#          username: ${{ secrets.VPS_USER }}
-#          key: ${{ secrets.VPS_SSH_KEY }}
-#          script: |
-#            docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} -p ${{ secrets.GHCR_TOKEN }}
-#
-#            docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:latest
-#
-#            docker stop gnostex-backend-api || true
-#            docker rm gnostex-backend-api || true
-#
-#            docker run -d \
-#              --name gnostex-backend-api \
-#              --restart unless-stopped \
-#              -p 8080:8080 \
-#              -e SPRING_PROFILES_ACTIVE=dev \
-#              -e DB_URL=jdbc:postgresql://host.docker.internal:5432/gnostexdb \
-#              -e DB_USERNAME=gnostex \
-#              -e DB_PASSWORD=gnostex \
-#
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} -p ${{ secrets.GHCR_TOKEN }}
+
+            docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:latest
+
+            docker stop gnostex-backend-api || true
+            docker rm gnostex-backend-api || true
+
+            docker run -d \
+              --name gnostex-backend-api \
+              --restart unless-stopped \
+              -p 8080:8080 \
+              -e SPRING_PROFILES_ACTIVE=dev \
+              -e DB_URL=jdbc:postgresql://host.docker.internal:5432/gnostexdb \
+              -e DB_USERNAME=gnostex \
+              -e DB_PASSWORD=gnostex \
