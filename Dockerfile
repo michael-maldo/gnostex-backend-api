@@ -10,7 +10,10 @@ COPY pom.xml .
 
 # Copy source and build
 COPY src ./src
-RUN mvn clean package -DskipTests
+#RUN mvn clean package -DskipTests
+#RUN mvn -B -DskipTests package
+RUN mvn -B -DskipTests -Dmaven.artifact.threads=1 package
+
 
 
 # =========================
