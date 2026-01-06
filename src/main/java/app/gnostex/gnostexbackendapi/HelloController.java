@@ -11,6 +11,6 @@ public class HelloController {
     @GetMapping("/hello")
     public String hello() {
         return "Gnostex backend <br/>" +
-                "/api/hello is running!!!";
+                "/api/hello is running";
     }
 }
