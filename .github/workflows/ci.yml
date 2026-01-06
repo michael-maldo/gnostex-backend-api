@@ -53,6 +53,8 @@ jobs:
       # Build & push image
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
+        env:
+          BUILDKIT_PROGRESS: plain
         with:
           context: .
           push: true
