@@ -16,7 +16,7 @@
 #RUN mvn -B -DskipTests -Dmaven.artifact.threads=1 -Djava.net.preferIPv4Stack=true clean package
 
 
-FROM maven:3.9.9-eclipse-temurin-17 AS build
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 WORKDIR /app
 
 COPY pom.xml .
