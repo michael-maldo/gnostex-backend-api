@@ -1,8 +1,8 @@
 name: CI/CD - Gnostex Backend API
 
 on:
-#  push:
-#    branches: [ "main" ]
+  #  push:
+  #    branches: [ "main" ]
 
   push:
     branches: [ "main", "develop" ]
@@ -26,13 +26,6 @@ jobs:
           distribution: temurin
           java-version: 21
           cache: maven
-
-      - uses: actions/cache@v4
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
 
       # Tests (quality gate)
       - name: Run tests unit & integration tests
@@ -61,16 +54,17 @@ jobs:
       # Build & push image
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
-        env:
-          BUILDKIT_PROGRESS: plain
         with:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:latest
-            ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:${{ github.sha }}
+                  ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:latest
+                  ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:${{ github.sha }}
 
       # Deploy to VPS
+      # GHCR github container repository -- container images
+
+
 #      - name: Deploy to VPS
 #        uses: appleboy/ssh-action@v1.0.3
 #        with:
@@ -88,61 +82,9 @@ jobs:
 #            docker run -d \
 #              --name gnostex-backend-api \
 #              --restart unless-stopped \
-#              --add-host=host.docker.internal:host-gateway \
 #              -p 8080:8080 \
 #              -e SPRING_PROFILES_ACTIVE=dev \
 #              -e DB_URL=jdbc:postgresql://host.docker.internal:5432/gnostexdb \
 #              -e DB_USERNAME=gnostex \
 #              -e DB_PASSWORD=gnostex \
-#              ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:latest
 #
-#            echo "Waiting for container health..."
-#
-#            for i in {1..20}; do
-#              STATUS=$(docker inspect --format='{{.State.Health.Status}}' gnostex-backend-api 2>/dev/null || echo "starting")
-#              echo "Health status: $STATUS"
-#
-#              if [ "$STATUS" = "healthy" ]; then
-#                echo "Container is healthy ✅"
-#                exit 0
-#              fi
-#
-#              if [ "$STATUS" = "unhealthy" ]; then
-#                echo "Container is unhealthy ❌"
-#                docker logs gnostex-backend-api
-#                exit 1
-#              fi
-#
-#              sleep 5
-#            done
-#
-#            echo "Health check timed out ❌"
-#            docker logs gnostex-backend-api
-#            exit 1
-
-
-
-
-
-#name: ci
-
-#on:
-#  push:
-#    branches: [ "*" ]
-#  pull_request:
-
-#jobs:
-#  build:
-#    runs-on: ubuntu-latest
-
-#    steps:
-#      - uses: actions/checkout@v4
-
-#      - name: Set up JDK
-#        uses: actions/setup-java@v4
-#        with:
-#          distribution: temurin
-#          java-version: 21
-
-#      - name: Build
-#        run: ./mvnw clean test
