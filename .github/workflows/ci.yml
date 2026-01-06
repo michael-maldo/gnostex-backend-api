@@ -71,54 +71,54 @@ jobs:
             ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:${{ github.sha }}
 
       # Deploy to VPS
-      - name: Deploy to VPS
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} -p ${{ secrets.GHCR_TOKEN }}
-
-            docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:latest
-
-            docker stop gnostex-backend-api || true
-            docker rm gnostex-backend-api || true
-
-            docker run -d \
-              --name gnostex-backend-api \
-              --restart unless-stopped \
-              --add-host=host.docker.internal:host-gateway \
-              -p 8080:8080 \
-              -e SPRING_PROFILES_ACTIVE=dev \
-              -e DB_URL=jdbc:postgresql://host.docker.internal:5432/gnostexdb \
-              -e DB_USERNAME=gnostex \
-              -e DB_PASSWORD=gnostex \
-              ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:latest
-
-            echo "Waiting for container health..."
-
-            for i in {1..20}; do
-              STATUS=$(docker inspect --format='{{.State.Health.Status}}' gnostex-backend-api 2>/dev/null || echo "starting")
-              echo "Health status: $STATUS"
-
-              if [ "$STATUS" = "healthy" ]; then
-                echo "Container is healthy ✅"
-                exit 0
-              fi
-
-              if [ "$STATUS" = "unhealthy" ]; then
-                echo "Container is unhealthy ❌"
-                docker logs gnostex-backend-api
-                exit 1
-              fi
-
-              sleep 5
-            done
-
-            echo "Health check timed out ❌"
-            docker logs gnostex-backend-api
-            exit 1
+#      - name: Deploy to VPS
+#        uses: appleboy/ssh-action@v1.0.3
+#        with:
+#          host: ${{ secrets.VPS_HOST }}
+#          username: ${{ secrets.VPS_USER }}
+#          key: ${{ secrets.VPS_SSH_KEY }}
+#          script: |
+#            docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} -p ${{ secrets.GHCR_TOKEN }}
+#
+#            docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:latest
+#
+#            docker stop gnostex-backend-api || true
+#            docker rm gnostex-backend-api || true
+#
+#            docker run -d \
+#              --name gnostex-backend-api \
+#              --restart unless-stopped \
+#              --add-host=host.docker.internal:host-gateway \
+#              -p 8080:8080 \
+#              -e SPRING_PROFILES_ACTIVE=dev \
+#              -e DB_URL=jdbc:postgresql://host.docker.internal:5432/gnostexdb \
+#              -e DB_USERNAME=gnostex \
+#              -e DB_PASSWORD=gnostex \
+#              ghcr.io/${{ secrets.GHCR_USERNAME }}/gnostex-backend-api:latest
+#
+#            echo "Waiting for container health..."
+#
+#            for i in {1..20}; do
+#              STATUS=$(docker inspect --format='{{.State.Health.Status}}' gnostex-backend-api 2>/dev/null || echo "starting")
+#              echo "Health status: $STATUS"
+#
+#              if [ "$STATUS" = "healthy" ]; then
+#                echo "Container is healthy ✅"
+#                exit 0
+#              fi
+#
+#              if [ "$STATUS" = "unhealthy" ]; then
+#                echo "Container is unhealthy ❌"
+#                docker logs gnostex-backend-api
+#                exit 1
+#              fi
+#
+#              sleep 5
+#            done
+#
+#            echo "Health check timed out ❌"
+#            docker logs gnostex-backend-api
+#            exit 1
 
 
 
