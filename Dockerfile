@@ -23,7 +23,7 @@ COPY pom.xml .
 RUN mvn dependency:go-offline
 
 COPY src ./src
-RUN mvn -e -X -B -Dmaven.test.skip=true clean package
+RUN mvn -B -Dmaven.test.skip=true clean package
 
 
 
