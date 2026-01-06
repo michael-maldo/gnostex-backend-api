@@ -13,7 +13,7 @@ COPY src ./src
 #RUN mvn clean package -DskipTests
 #RUN mvn -B -DskipTests package
 #RUN mvn -B -DskipTests -Dmaven.artifact.threads=1 package
-RUN mvn -B -DskipTests -Dmaven.artifact.threads=1 clean package
+RUN mvn -B -DskipTests -Dmaven.artifact.threads=1 -Djava.net.preferIPv4Stack=true clean package
 
 
 
